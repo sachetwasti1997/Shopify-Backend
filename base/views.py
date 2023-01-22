@@ -30,6 +30,11 @@ def getProducts(request):
 
 @api_view(['GET'])
 def getProductById(request, primaryKey):
-  if primaryKey not in products:
+  product = None
+  for p in products:
+    if p['_id'] == primaryKey:
+      product = p
+      break 
+  if product is None:
     return Response("Product Not Found", status=404)
-  return Response(products[primaryKey])
+  return Response(product)
